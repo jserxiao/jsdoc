@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force"
+  },
+  "include": ["src/env.d.ts", "docs/.vitepress/**/*.ts", "docs/.vitepress/**/*.tsx", "docs/.vitepress/**/*.mts"],
+  "exclude": ["node_modules"]
+}

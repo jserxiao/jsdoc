@@ -11,6 +11,8 @@
 | 3 | BOM 浏览器对象 | [03-BOM浏览器对象.md](./03-BOM浏览器对象.md) |
 | 4 | 浏览器存储 | [04-浏览器存储.md](./04-浏览器存储.md) |
 | 5 | 网络请求 | [05-网络请求.md](./05-网络请求.md) |
+| 6 | WebSocket | [06-WebSocket.md](./06-WebSocket.md) |
+| 7 | File API 与 Blob | [07-FileAPI与Blob.md](./07-FileAPI与Blob.md) |
 
 ---
 
