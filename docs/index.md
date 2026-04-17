@@ -11,13 +11,13 @@ hero:
   actions:
     - theme: brand
       text: 开始学习
-      link: /javascript/
+      link: /md/javascript/
     - theme: alt
       text: HTML 基础
-      link: /html/
+      link: /md/html/
     - theme: alt
       text: CSS 样式
-      link: /css/
+      link: /md/css/
 
 features:
   - icon: 📜
