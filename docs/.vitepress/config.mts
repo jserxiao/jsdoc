@@ -66,6 +66,52 @@ function generateSidebar(techDir: string): { text: string; collapsed: boolean; i
   })
 }
 
+// 生成导航栏下拉项（从子文件夹读取）
+function generateNavItems(techDir: string, techName: string): { text: string; link: string }[] {
+  const subFolders = getSubFolders(techDir)
+  
+  return subFolders.map(folder => {
+    const title = extractTitle(folder)
+    return {
+      text: title,
+      link: `/md/${techName}/${folder}/`
+    }
+  })
+}
+
+// 动态生成所有技术栈的导航和侧边栏配置
+function generateConfig() {
+  const techStacks = ['javascript', 'typescript', 'html', 'css']
+  const nav: any[] = []
+  const sidebar: Record<string, any[]> = {}
+  
+  techStacks.forEach(tech => {
+    const techDir = path.join(mdDir, tech)
+    
+    // 生成导航下拉项
+    nav.push({
+      text: tech.charAt(0).toUpperCase() + tech.slice(1),
+      items: [
+        { text: '概述', link: `/md/${tech}/` },
+        ...generateNavItems(techDir, tech)
+      ]
+    })
+    
+    // 生成侧边栏
+    sidebar[`/md/${tech}/`] = [
+      {
+        text: `${tech.charAt(0).toUpperCase() + tech.slice(1)} 学习指南`,
+        items: [{ text: '概述', link: `/md/${tech}/` }]
+      },
+      ...generateSidebar(techDir)
+    ]
+  })
+  
+  return { nav, sidebar }
+}
+
+const { nav, sidebar } = generateConfig()
+
 // 主配置
 export default defineConfig({
   title: '前端学习指南',
@@ -78,53 +124,14 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg',
     
-    // 导航栏
+    // 导航栏（动态生成折叠下拉）
     nav: [
       { text: '首页', link: '/' },
-      { text: 'JavaScript', link: '/md/javascript/' },
-      { text: 'TypeScript', link: '/md/typescript/' },
-      { text: 'HTML', link: '/md/html/' },
-      { text: 'CSS', link: '/md/css/' }
+      ...nav
     ],
     
-    // 侧边栏配置
-    sidebar: {
-      // JavaScript 侧边栏
-      '/md/javascript/': [
-        {
-          text: 'JavaScript 学习指南',
-          items: [{ text: '概述', link: '/md/javascript/' }]
-        },
-        ...generateSidebar(path.join(mdDir, 'javascript'))
-      ],
-      
-      // TypeScript 侧边栏
-      '/md/typescript/': [
-        {
-          text: 'TypeScript 学习指南',
-          items: [{ text: '概述', link: '/md/typescript/' }]
-        },
-        ...generateSidebar(path.join(mdDir, 'typescript'))
-      ],
-      
-      // HTML 侧边栏
-      '/md/html/': [
-        {
-          text: 'HTML 学习指南',
-          items: [{ text: '概述', link: '/md/html/' }]
-        },
-        ...generateSidebar(path.join(mdDir, 'html'))
-      ],
-      
-      // CSS 侧边栏
-      '/md/css/': [
-        {
-          text: 'CSS 学习指南',
-          items: [{ text: '概述', link: '/md/css/' }]
-        },
-        ...generateSidebar(path.join(mdDir, 'css'))
-      ]
-    },
+    // 侧边栏配置（动态生成）
+    sidebar,
     
     // 社交链接
     socialLinks: [

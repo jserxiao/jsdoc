@@ -80,16 +80,16 @@ async function fetchUser() {
 
 执行流程：
 ┌──────────────────────────────────────────┐
-│ console.log('1. 开始')                    │ → 同步执行
-│ await getUser()                          │ → 暂停，等待 Promise
-│     ↓                                    │
-│     ← Promise 解决                       │
-│ console.log('2. 获取用户')               │ → 继续执行
-│ await getPosts()                         │ → 暂停，等待 Promise
-│     ↓                                    │
-│     ← Promise 解决                       │
-│ console.log('3. 获取文章')               │ → 继续执行
-│ return { user, posts }                   │ → 返回 Promise
+│ console.log('1. 开始')                  │ → 同步执行
+│ await getUser()                         │ → 暂停，等待 Promise
+│     ↓                                   │
+│     ← Promise 解决                      │
+│ console.log('2. 获取用户')              │ → 继续执行
+│ await getPosts()                        │ → 暂停，等待 Promise
+│     ↓                                   │
+│     ← Promise 解决                      │
+│ console.log('3. 获取文章')              │ → 继续执行
+│ return { user, posts }                  │ → 返回 Promise
 └──────────────────────────────────────────┘
 ```
 

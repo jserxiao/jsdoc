@@ -2,11 +2,11 @@
 
 ## 模块概述
 
-TypeScript 完整支持面向对象编程,包括类、继承、抽象类、接口实现等特性。
+TypeScript 完整支持面向对象编程，包括类、继承、抽象类、接口实现等特性。
 
 ## 目录
 
-- [01-类的基本概念](./01-类的基本概念.md)
+- [01-类的基本语法](./01-类的基本语法.md)
 - [02-访问修饰符](./02-访问修饰符.md)
 - [03-抽象类](./03-抽象类.md)
 - [04-接口实现](./04-接口实现.md)
@@ -44,10 +44,10 @@ class User {
 
 ```typescript
 class Animal {
-  public name: string        // 公有,任何地方可访问
-  private secret: string     // 私有,仅类内部可访问
-  protected family: string   // 受保护,类及子类可访问
-  readonly id: number        // 只读,不可修改
+  public name: string        // 公有，任何地方可访问
+  private secret: string     // 私有，仅类内部可访问
+  protected family: string   // 受保护，类及子类可访问
+  readonly id: number        // 只读，不可修改
 
   constructor(name: string, secret: string, family: string) {
     this.name = name
