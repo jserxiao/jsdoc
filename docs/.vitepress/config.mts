@@ -79,9 +79,14 @@ function generateNavItems(techDir: string, techName: string): { text: string; li
   })
 }
 
+// 动态获取 md 目录下的所有技术栈（一级目录）
+function getTechStacks(): string[] {
+  return getSubFolders(mdDir)
+}
+
 // 动态生成所有技术栈的导航和侧边栏配置
 function generateConfig() {
-  const techStacks = ['javascript', 'typescript', 'html', 'css']
+  const techStacks = getTechStacks()
   const nav: any[] = []
   const sidebar: Record<string, any[]> = {}
   
@@ -90,7 +95,7 @@ function generateConfig() {
     
     // 生成导航下拉项
     nav.push({
-      text: tech.charAt(0).toUpperCase() + tech.slice(1),
+      text: tech,
       items: [
         { text: '概述', link: `/md/${tech}/` },
         ...generateNavItems(techDir, tech)
@@ -100,7 +105,7 @@ function generateConfig() {
     // 生成侧边栏
     sidebar[`/md/${tech}/`] = [
       {
-        text: `${tech.charAt(0).toUpperCase() + tech.slice(1)} 学习指南`,
+        text: `${tech}`,
         items: [{ text: '概述', link: `/md/${tech}/` }]
       },
       ...generateSidebar(techDir)
@@ -115,7 +120,7 @@ const { nav, sidebar } = generateConfig()
 // 主配置
 export default defineConfig({
   title: '前端学习指南',
-  description: '全面系统的前端学习文档 - JavaScript、HTML、CSS、TypeScript',
+  description: '全面系统的前端学习文档 - JavaScript、HTML、CSS、TypeScript、前端生态',
   
   // 启用简洁 URL
   cleanUrls: true,

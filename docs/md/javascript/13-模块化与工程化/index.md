@@ -6,14 +6,13 @@
 
 ## 模块概述
 
-JavaScript 从简单的脚本语言发展为构建复杂应用的语言，模块化和工程化起到了关键作用。本模块将从模块化规范到构建工具，全面介绍现代前端工程化的核心知识。
+JavaScript 从简单的脚本语言发展为构建复杂应用的语言，模块化和工程化起到了关键作用。本模块将全面介绍模块化规范的核心知识。
 
 ### 学习目标
 
 - 理解模块化的演进历史和各种规范（CommonJS、ESM、AMD 等）
-- 掌握 npm、yarn、pnpm 等包管理工具的使用
 - 深入理解 package.json 的各项配置
-- 熟练使用 Webpack、Vite 等构建工具
+- 掌握模块化开发最佳实践
 
 ---
 
@@ -22,9 +21,9 @@ JavaScript 从简单的脚本语言发展为构建复杂应用的语言，模块
 | 序号 | 模块 | 文件 | 内容概述 |
 |------|------|------|----------|
 | 1 | 模块化规范 | [01-模块化规范.md](./01-模块化规范.md) | CommonJS、AMD、CMD、UMD、ES Modules、循环依赖 |
-| 2 | 包管理工具 | [02-包管理工具.md](./02-包管理工具.md) | npm、yarn、pnpm 对比、语义化版本、最佳实践 |
-| 3 | package.json详解 | [03-package.json详解.md](./03-package.json详解.md) | 所有属性详解、依赖管理、脚本配置、工作区 |
-| 4 | 构建工具 | [04-构建工具.md](./04-构建工具.md) | Webpack、Vite、Rollup、esbuild 配置与对比 |
+| 2 | package.json详解 | [02-package.json详解.md](./02-package.json详解.md) | 所有属性详解、依赖管理、脚本配置、工作区 |
+
+> 💡 **提示**：包管理工具和构建工具相关内容已迁移至 [前端生态 - 工程化与构建](../../前端生态/07-工程化与构建/) 模块。
 
 ---
 
@@ -38,7 +37,7 @@ JavaScript 从简单的脚本语言发展为构建复杂应用的语言，模块
 
 ### 模块规范对比
 
-| 规范 | 加载方式 | 迓行环境 | 特点 |
+| 规范 | 加载方式 | 运行环境 | 特点 |
 |------|----------|----------|------|
 | CommonJS | 同步 | Node.js | 服务端标准、运行时加载 |
 | AMD | 异步 | 浏览器 | RequireJS、预加载 |
@@ -60,55 +59,6 @@ import name from './module';
 import { a, b } from './module';
 import * as all from './module';
 import('./module').then(m => {});  // 动态导入
-```
-
-### 包管理工具对比
-
-| 特性 | npm | yarn | pnpm |
-|------|-----|------|------|
-| 安装速度 | 较快 | 快 | 最快 |
-| 磁盘空间 | 一般 | 一般 | 极省 |
-| 幽灵依赖 | 有 | 有 | 无 |
-| node_modules | 扁平化 | 扁平化 | 符号链接 |
-| Monorepo | workspaces | workspaces | workspace |
-
-### 构建工具对比
-
-| 特性 | Webpack | Vite | Rollup | esbuild |
-|------|---------|------|--------|---------|
-| 开发服务器 | ✅ | ✅ | ❌ | ✅ |
-| HMR | ✅ | ✅ | ❌ | ❌ |
-| 构建速度 | 慢 | 快 | 中 | 极快 |
-| 配置复杂度 | 高 | 低 | 中 | 低 |
-| 适用场景 | 应用 | 应用 | 库 | 通用 |
-
----
-
-## 实用速查
-
-### npm 常用命令
-
-```bash
-# 初始化项目
-npm init -y
-
-# 安装依赖
-npm install <package>        # 生产依赖
-npm install <package> -D     # 开发依赖
-npm install <package> -g     # 全局安装
-
-# 运行脚本
-npm run <script>
-npm start / npm test
-
-# 查看信息
-npm list --depth=0
-npm outdated
-npm audit
-
-# 发布包
-npm login
-npm publish
 ```
 
 ### package.json 核心字段
@@ -146,59 +96,6 @@ npm publish
 }
 ```
 
-### 版本范围语法
-
-| 符号 | 含义 | 示例 |
-|------|------|------|
-| `^` | 兼容次版本 | `^1.2.3` → `>=1.2.3 <2.0.0` |
-| `~` | 兼容补丁版本 | `~1.2.3` → `>=1.2.3 <1.3.0` |
-| `>` | 大于 | `>1.2.3` |
-| `>=` | 大于等于 | `>=1.2.3` |
-| `\|\|` | 或 | `^1.0.0 \|\| ^2.0.0` |
-
-### Webpack 核心配置
-
-```javascript
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js'
-  },
-  module: {
-    rules: [
-      { test: /\.js$/, use: 'babel-loader' },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] }
-    ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' })
-  ],
-  optimization: {
-    splitChunks: { chunks: 'all' }
-  }
-};
-```
-
-### Vite 核心配置
-
-```javascript
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000,
-    proxy: { '/api': 'http://localhost:8080' }
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true
-  },
-  resolve: {
-    alias: { '@': '/src' }
-  }
-});
-```
-
 ---
 
 ## 知识关联
@@ -210,7 +107,7 @@ export default defineConfig({
     ├── 基础语法与核心概念（模块语法基础）
     ├── 异步编程（动态导入、异步加载）
     ├── ES6+新特性（ES Modules）
-    └── 性能优化（构建优化、代码分割）
+    └── 前端生态-工程化与构建（包管理、构建工具）
 ```
 
 ### 工程化流程
@@ -324,24 +221,27 @@ my-project/
 ### 初级：基础使用
 1. 理解模块化的概念和好处
 2. 掌握 ES Modules 的导入导出语法
-3. 学会使用 npm 安装和管理依赖
-4. 能够使用 Vite 创建简单项目
+3. 学会使用包管理工具安装依赖
 
 ### 中级：深入理解
 1. 理解各种模块规范的区别和应用场景
 2. 掌握 package.json 的常用配置
-3. 学会配置 Webpack 或 Vite
-4. 理解构建流程和打包原理
+3. 理解模块加载原理
 
 ### 高级：工程化实践
 1. 搭建企业级项目脚手架
 2. 配置 Monorepo 工作区
 3. 优化构建性能和产物体积
-4. 实现自动化 CI/CD 流程
 
 ---
 
-## 推荐资源
+## 相关资源
+
+### 包管理工具与构建工具
+- [包管理工具](../../前端生态/07-工程化与构建/02-包管理工具/) - npm、pnpm、Yarn 详解
+- [打包构建工具](../../前端生态/07-工程化与构建/01-打包构建工具/) - Webpack、Vite、Rollup 详解
+- [脚手架工具](../../前端生态/07-工程化与构建/03-脚手架工具/) - 项目初始化工具
+- [Monorepo](../../前端生态/07-工程化与构建/07-Monorepo/) - 多包管理方案
 
 ### 官方文档
 - [npm 官方文档](https://docs.npmjs.com/)
@@ -353,7 +253,6 @@ my-project/
 ### 学习资源
 - [ES Modules 规范](https://tc39.es/ecma262/#sec-modules)
 - [Node.js 模块文档](https://nodejs.org/api/esm.html)
-- [前端工程化指南](https://github.com/fouber/blog)
 
 ---
 

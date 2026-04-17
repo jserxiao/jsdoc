@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "moduleDetection": "force"
   },
   "include": ["src/env.d.ts", "docs/.vitepress/**/*.ts", "docs/.vitepress/**/*.tsx", "docs/.vitepress/**/*.mts"],
