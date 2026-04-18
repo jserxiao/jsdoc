@@ -1,6 +1,6 @@
 # SEO 与最佳实践
 
-> SEO（搜索引擎优化）是提升网站在搜索引擎中排名的技术集合。良好的 HTML 结构和最佳实践是 SEO 的基础。
+> SEO（搜索引擎优化）是提升网站在搜索引擎中排名的技术集合。良好的 HTML 结构和最佳实践是 SEO 的基础。内容参考《HTML5 权威指南》等经典著作。
 
 ## 学习要点
 
@@ -25,7 +25,24 @@
     └── 根据算法决定搜索结果顺序
 ```
 
-### 1.2 影响 SEO 的关键因素
+### 1.2 爬虫工作原理
+
+```
+爬虫发现 URL 的方式：
+1. 已知的 URL 数据库
+2. 站点地图（sitemap.xml）
+3. 外部链接
+4. 内部链接
+5. 用户提交（Search Console）
+
+爬虫行为特点：
+- 遵循 robots.txt 规则
+- 有爬取频率限制（crawl budget）
+- 优先爬取重要页面
+- 会被慢速页面影响爬取效率
+```
+
+### 1.3 影响 SEO 的关键因素
 
 | 因素类别 | 具体内容 | 重要性 |
 |----------|----------|--------|
@@ -148,6 +165,43 @@
 <h1 style="font-size: 14px">这不是标题，只是为了大字体</h1>  <!-- 错误！ -->
 ```
 
+#### 标题层级大纲示例
+
+```html
+<!-- 文章结构大纲 -->
+<article>
+    <h1>JavaScript 异步编程完整指南</h1>          <!-- 主标题 -->
+    
+    <section>
+        <h2>什么是异步编程</h2>                    <!-- 1. -->
+        <h3>同步 vs 异步</h3>                     <!-- 1.1 -->
+        <h3>为什么需要异步</h3>                    <!-- 1.2 -->
+    </section>
+    
+    <section>
+        <h2>回调函数</h2>                          <!-- 2. -->
+        <h3>回调函数基础</h3>                     <!-- 2.1 -->
+        <h3>回调地狱问题</h3>                     <!-- 2.2 -->
+    </section>
+    
+    <section>
+        <h2>Promise</h2>                           <!-- 3. -->
+        <h3>Promise 基础</h3>                     <!-- 3.1 -->
+        <h3>Promise 链式调用</h3>                  <!-- 3.2 -->
+        <h3>Promise.all 与 Promise.race</h3>       <!-- 3.3 -->
+        <h4>Promise.all 详解</h4>                 <!-- 3.3.1 -->
+        <h4>Promise.race 详解</h4>                <!-- 3.3.2 -->
+    </section>
+    
+    <section>
+        <h2>async/await</h2>                       <!-- 4. -->
+        <h3>基本语法</h3>                         <!-- 4.1 -->
+        <h3>错误处理</h3>                         <!-- 4.2 -->
+        <h3>并行执行</h3>                         <!-- 4.3 -->
+    </section>
+</article>
+```
+
 ### 2.3 语义化标签与 SEO 权重
 
 ```html
@@ -177,6 +231,118 @@
 </address>
 ```
 
+#### 语义化标签使用场景
+
+```html
+<!-- 首页结构 -->
+<body>
+    <header>
+        <!-- Logo、搜索框、主导航 -->
+        <a href="/" rel="home">
+            <img src="logo.svg" alt="网站名称">
+        </a>
+        <nav aria-label="主导航">
+            <ul>
+                <li><a href="/products">产品</a></li>
+                <li><a href="/services">服务</a></li>
+                <li><a href="/about">关于我们</a></li>
+                <li><a href="/contact">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Hero 区域 -->
+        <section class="hero">
+            <h1>网站核心价值主张</h1>
+            <p>副标题说明</p>
+            <a href="/get-started" class="cta">立即开始</a>
+        </section>
+        
+        <!-- 特色区域 -->
+        <section class="features">
+            <h2>核心特色</h2>
+            <article class="feature">
+                <h3>特色一</h3>
+                <p>特色描述...</p>
+            </article>
+            <article class="feature">
+                <h3>特色二</h3>
+                <p>特色描述...</p>
+            </article>
+        </section>
+        
+        <!-- 推荐内容 -->
+        <section class="recommendations">
+            <h2>推荐阅读</h2>
+            <article>
+                <h3>文章标题</h3>
+                <p>文章摘要...</p>
+                <a href="/article/1">阅读更多</a>
+            </article>
+        </section>
+    </main>
+    
+    <aside>
+        <!-- 侧边栏：订阅、广告、热门文章 -->
+        <section>
+            <h2>订阅更新</h2>
+            <form>...</form>
+        </section>
+        <section>
+            <h2>热门文章</h2>
+            <ul>...</ul>
+        </section>
+    </aside>
+    
+    <footer>
+        <nav aria-label="页脚导航">
+            <ul>
+                <li><a href="/privacy">隐私政策</a></li>
+                <li><a href="/terms">服务条款</a></li>
+            </ul>
+        </nav>
+        <p>&copy; 2024 网站名称</p>
+    </footer>
+</body>
+
+<!-- 文章页面结构 -->
+<body>
+    <header>...</header>
+    
+    <main>
+        <article itemscope itemtype="https://schema.org/Article">
+            <header>
+                <h1 itemprop="headline">文章标题</h1>
+                <p>
+                    <time itemprop="datePublished" datetime="2024-01-15">2024年1月15日</time>
+                    由 <span itemprop="author">张三</span> 发布
+                </p>
+            </header>
+            
+            <section>
+                <h2>第一节</h2>
+                <p itemprop="articleBody">内容...</p>
+            </section>
+            
+            <footer>
+                <p>标签：<a href="/tag/js" rel="tag">JavaScript</a></p>
+            </footer>
+        </article>
+        
+        <aside>
+            <h2>相关文章</h2>
+            <ul>
+                <li><a href="/article/2">相关文章1</a></li>
+                <li><a href="/article/3">相关文章2</a></li>
+            </ul>
+        </aside>
+    </main>
+    
+    <footer>...</footer>
+</body>
+```
+
 ---
 
 ## 3. Meta 标签详解
@@ -194,24 +360,58 @@
 <meta name="description" content="页面描述，150-160字符">
 <meta name="keywords" content="关键词1, 关键词2, 关键词3">
 <meta name="author" content="作者名">
+```
 
-<!-- robots 指令详解 -->
+#### robots 指令详解
+
+```html
+<!-- robots 指令 -->
 <meta name="robots" content="index, follow">        <!-- 索引并跟踪链接（默认） -->
 <meta name="robots" content="noindex, nofollow">   <!-- 不索引、不跟踪 -->
 <meta name="robots" content="noindex, follow">     <!-- 不索引但跟踪链接 -->
 <meta name="robots" content="index, nofollow">     <!-- 索引但不跟踪链接 -->
 <meta name="robots" content="noarchive">           <!-- 不显示快照 -->
 <meta name="robots" content="nosnippet">           <!-- 不显示摘要 -->
+<meta name="robots" content="noimageindex">        <!-- 不索引图片 -->
+<meta name="robots" content="notranslate">         <!-- 不提供翻译 -->
 
 <!-- 针对特定搜索引擎 -->
 <meta name="googlebot" content="noindex">
 <meta name="baiduspider" content="noindex">
+<meta name="bingbot" content="noindex">
 
-<!-- 主题色（移动浏览器地址栏颜色） -->
-<meta name="theme-color" content="#4285f4">
+<!-- 组合使用 -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-<!-- 浏览器兼容性 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 指令说明 -->
+<!--
+index / noindex: 是否索引页面
+follow / nofollow: 是否跟踪页面上的链接
+archive / noarchive: 是否保存快照
+snippet / nosnippet: 是否显示摘要
+-->
+```
+
+#### 视口设置详解
+
+```html
+<!-- 基础视口设置 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 完整参数 -->
+<meta name="viewport" content="
+    width=device-width,      /* 宽度等于设备宽度 */
+    initial-scale=1.0,       /* 初始缩放比例 */
+    maximum-scale=5.0,       /* 最大缩放比例（允许用户缩放） */
+    minimum-scale=1.0,       /* 最小缩放比例 */
+    user-scalable=yes,       /* 允许用户缩放 */
+    viewport-fit=cover       /* 适配刘海屏 */
+">
+
+<!-- ⚠️ 避免禁止缩放（影响可访问性） -->
+<!-- ❌ 不推荐 -->
+<meta name="viewport" content="user-scalable=no">
+<meta name="viewport" content="maximum-scale=1.0">
 ```
 
 ### 3.2 Open Graph 协议（社交媒体）
@@ -227,8 +427,13 @@
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="网站名称">
 <meta property="og:locale" content="zh_CN">
+```
 
-<!-- 文章类型专属标签 -->
+#### 不同内容类型的 OG 标签
+
+```html
+<!-- 文章类型 -->
+<meta property="og:type" content="article">
 <meta property="article:published_time" content="2024-01-15T08:00:00+08:00">
 <meta property="article:modified_time" content="2024-01-16T10:30:00+08:00">
 <meta property="article:author" content="张三">
@@ -236,10 +441,47 @@
 <meta property="article:tag" content="前端开发">
 <meta property="article:tag" content="JavaScript">
 
-<!-- 产品类型专属标签 -->
+<!-- 产品类型 -->
+<meta property="og:type" content="product">
 <meta property="product:price:amount" content="99.00">
 <meta property="product:price:currency" content="CNY">
 <meta property="product:availability" content="in stock">
+<meta property="product:condition" content="new">
+<meta property="product:brand" content="品牌名">
+
+<!-- 视频类型 -->
+<meta property="og:type" content="video.other">
+<meta property="og:video" content="https://example.com/video.mp4">
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:video:width" content="1280">
+<meta property="og:video:height" content="720">
+<meta property="video:duration" content="1800">
+
+<!-- 网站首页 -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="网站名称 - 副标题">
+<meta property="og:description" content="网站整体描述">
+```
+
+#### OG 图片最佳实践
+
+```html
+<!-- 推荐图片尺寸 -->
+<!-- 通用分享：1200 x 630 (1.91:1) -->
+<!-- Facebook：1200 x 628 -->
+<!-- Twitter 大图：1200 x 600 -->
+<!-- LinkedIn：1200 x 627 -->
+
+<!-- 多尺寸图片 -->
+<meta property="og:image" content="https://example.com/image-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="图片描述">
+
+<!-- 备用图片 -->
+<meta property="og:image" content="https://example.com/image-square.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
 ```
 
 ### 3.3 Twitter Card
@@ -252,12 +494,31 @@
 <meta name="twitter:title" content="文章标题">
 <meta name="twitter:description" content="文章描述">
 <meta name="twitter:image" content="https://example.com/image.jpg">
+<meta name="twitter:image:alt" content="图片描述">
+```
 
-<!-- 卡片类型 -->
-<!-- summary: 小图摘要卡片 -->
-<!-- summary_large_image: 大图摘要卡片 -->
-<!-- player: 视频/音频播放器卡片 -->
-<!-- app: 应用下载卡片 -->
+#### Twitter 卡片类型
+
+```html
+<!-- 摘要卡片（小图） -->
+<meta name="twitter:card" content="summary">
+<!-- 图片尺寸：最小 144x144，推荐 300x157 -->
+
+<!-- 大图摘要卡片 -->
+<meta name="twitter:card" content="summary_large_image">
+<!-- 图片尺寸：最小 300x157，推荐 1200x600 -->
+
+<!-- 播放器卡片 -->
+<meta name="twitter:card" content="player">
+<meta name="twitter:player" content="https://example.com/player">
+<meta name="twitter:player:width" content="1280">
+<meta name="twitter:player:height" content="720">
+
+<!-- 应用卡片 -->
+<meta name="twitter:card" content="app">
+<meta name="twitter:app:id:iphone" content="123456789">
+<meta name="twitter:app:id:ipad" content="123456789">
+<meta name="twitter:app:id:googleplay" content="com.example.app">
 ```
 
 ### 3.4 结构化数据（Schema.org）
@@ -292,8 +553,12 @@
     "description": "全面的前端开发教程..."
 }
 </script>
+```
 
-<!-- 产品结构化数据 -->
+#### 常用结构化数据类型
+
+```html
+<!-- 产品 -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -310,17 +575,70 @@
         "url": "https://example.com/watch",
         "priceCurrency": "CNY",
         "price": "999.00",
-        "availability": "https://schema.org/InStock"
+        "priceValidUntil": "2024-12-31",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+            "@type": "Organization",
+            "name": "官方店铺"
+        }
     },
     "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.5",
         "reviewCount": "128"
-    }
+    },
+    "review": [{
+        "@type": "Review",
+        "author": {
+            "@type": "Person",
+            "name": "用户A"
+        },
+        "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5"
+        },
+        "reviewBody": "非常好用的产品！"
+    }]
 }
 </script>
 
-<!-- 面包屑导航结构化数据 -->
+<!-- 本地商家 -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "咖啡店",
+    "image": "https://example.com/cafe.jpg",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "中关村大街1号",
+        "addressLocality": "北京市",
+        "addressRegion": "海淀区",
+        "postalCode": "100080",
+        "addressCountry": "CN"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.98,
+        "longitude": 116.31
+    },
+    "url": "https://example.com/cafe",
+    "telephone": "+86-10-12345678",
+    "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "22:00"
+    }, {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "10:00",
+        "closes": "23:00"
+    }]
+}
+</script>
+
+<!-- 面包屑导航 -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -338,9 +656,57 @@
     }, {
         "@type": "ListItem",
         "position": 3,
-        "name": "前端开发指南",
-        "item": "https://example.com/tutorials/frontend"
+        "name": "前端开发指南"
     }]
+}
+</script>
+
+<!-- FAQ 页面 -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+        "@type": "Question",
+        "name": "什么是前端开发？",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "前端开发是创建网页用户界面的过程，主要涉及 HTML、CSS、JavaScript 等技术。"
+        }
+    }, {
+        "@type": "Question",
+        "name": "如何学习前端开发？",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "建议从 HTML、CSS 基础开始学习，然后掌握 JavaScript，最后学习框架和工程化工具。"
+        }
+    }]
+}
+</script>
+
+<!-- HowTo 步骤指南 -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "如何部署网站",
+    "step": [{
+        "@type": "HowToStep",
+        "name": "准备代码",
+        "text": "确保代码已提交到 Git 仓库",
+        "image": "https://example.com/step1.jpg"
+    }, {
+        "@type": "HowToStep",
+        "name": "配置服务器",
+        "text": "设置服务器环境和域名",
+        "image": "https://example.com/step2.jpg"
+    }, {
+        "@type": "HowToStep",
+        "name": "部署上线",
+        "text": "将代码部署到服务器",
+        "image": "https://example.com/step3.jpg"
+    }],
+    "totalTime": "PT30M"
 }
 </script>
 ```
@@ -355,11 +721,11 @@
 <!-- 图片 SEO 最佳实践 -->
 <img 
     src="https://example.com/images/frontend-tutorial.jpg"
-    alt="前端开发教程封面图，展示HTML、CSS和JavaScript三大核心技术"  <!-- 必须有描述性 alt -->
+    alt="前端开发教程封面图，展示HTML、CSS和JavaScript三大核心技术"
     width="800"
-    height="450"          <!-- 明确尺寸，避免布局偏移 -->
-    loading="lazy"        <!-- 懒加载 -->
-    decoding="async"      <!-- 异步解码 -->
+    height="450"
+    loading="lazy"
+    decoding="async"
 >
 
 <!-- 响应式图片 -->
@@ -380,15 +746,71 @@
         height="250"
         loading="lazy">
 </picture>
+```
 
-<!-- 图片加上结构化数据 -->
-<figure itemscope itemtype="https://schema.org/ImageObject">
-    <img 
-        src="chart.png" 
-        alt="2024年销售增长图表"
-        itemprop="contentUrl">
-    <figcaption itemprop="caption">图1：2024年第一季度销售数据对比</figcaption>
-</figure>
+#### alt 文本编写指南
+
+```html
+<!-- ✅ 好的 alt 文本 -->
+<img alt="前端开发教程封面图，展示HTML、CSS和JavaScript三大核心技术">
+<img alt="2024年第一季度销售增长趋势图表，同比增长15%">
+<img alt="红色提交按钮，点击提交表单">
+
+<!-- ❌ 差的 alt 文本 -->
+<img alt="图片">                           <!-- 无意义 -->
+<img alt="img001.jpg">                     <!-- 文件名 -->
+<img alt="图片图片图片图片图片">            <!-- 关键词堆砌 -->
+<img alt="">                               <!-- 空值（装饰性图片除外） -->
+
+<!-- 装饰性图片（空 alt） -->
+<img alt="" src="decorative-pattern.png">  <!-- 纯装饰，不传递信息 -->
+
+<!-- 复杂图片使用 longdesc 或 aria-describedby -->
+<img 
+    src="complex-chart.png" 
+    alt="2024年销售数据分析图表"
+    aria-describedby="chart-description"
+>
+<p id="chart-description" class="sr-only">
+    详细描述：图表显示2024年第一季度销售额为150万元...
+</p>
+```
+
+#### 图片性能优化
+
+```html
+<!-- 现代图片格式 -->
+<picture>
+    <source srcset="image.avif" type="image/avif">
+    <source srcset="image.webp" type="image/webp">
+    <img src="image.jpg" alt="Fallback image">
+</picture>
+
+<!-- 懒加载 -->
+<img loading="lazy" src="image.jpg" alt="懒加载图片">
+<iframe loading="lazy" src="embed.html"></iframe>
+
+<!-- 响应式图片尺寸 -->
+<img 
+    srcset="small.jpg 400w, medium.jpg 800w, large.jpg 1200w"
+    sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    src="medium.jpg"
+    alt="响应式图片"
+    width="800"
+    height="450"
+>
+
+<!-- 预加载重要图片 -->
+<link rel="preload" as="image" href="hero.webp">
+
+<!-- 图片解码 -->
+<img decoding="async" src="image.jpg" alt="异步解码">
+<img decoding="sync" src="important.jpg" alt="同步解码">
+<img decoding="auto" src="image.jpg" alt="自动选择">
+
+<!-- fetchpriority -->
+<img fetchpriority="high" src="hero.jpg" alt="高优先级">
+<img fetchpriority="low" src="below-fold.jpg" alt="低优先级">
 ```
 
 ### 4.2 视频 SEO
@@ -407,19 +829,29 @@
     <track kind="subtitles" src="subtitles-en.vtt" srclang="en" label="English">
     您的浏览器不支持视频播放
 </video>
+```
 
-<!-- 视频结构化数据 -->
+#### 视频结构化数据
+
+```html
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     "name": "前端开发入门教程",
-    "description": "从零开始学习前端开发",
+    "description": "从零开始学习前端开发，涵盖 HTML、CSS、JavaScript 基础知识",
     "thumbnailUrl": ["https://example.com/thumbnail.jpg"],
     "uploadDate": "2024-01-15T08:00:00+08:00",
     "duration": "PT30M15S",
     "contentUrl": "https://example.com/video.mp4",
-    "embedUrl": "https://example.com/embed/video"
+    "embedUrl": "https://example.com/embed/video",
+    "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": {
+            "@type": "WatchAction"
+        },
+        "userInteractionCount": 12345
+    }
 }
 </script>
 ```
@@ -452,23 +884,47 @@
         </li>
     </ol>
 </nav>
+```
 
-<!-- 锚文本优化 -->
+#### 锚文本优化
+
+```html
 <!-- ✅ 好的锚文本 -->
 <a href="/html-tutorial">HTML 完整教程</a>
+<a href="/css-flexbox">CSS Flexbox 布局详解</a>
+<a href="/js-async">JavaScript 异步编程指南</a>
 
 <!-- ❌ 差的锚文本 -->
 <a href="/html-tutorial">点击这里</a>
 <a href="/html-tutorial">了解更多</a>
+<a href="/html-tutorial">链接</a>
+```
 
-<!-- 链接关系 -->
-<a href="/about" rel="author">关于作者</a>
-<a href="/privacy" rel="nofollow">隐私政策</a>
-<a href="https://other-site.com" rel="noopener noreferrer nofollow">外部链接</a>
+#### 链接关系
 
-<!-- 分页处理 -->
-<link rel="prev" href="/articles?page=1">
-<link rel="next" href="/articles?page=3">
+```html
+<!-- rel 属性详解 -->
+<a href="/about" rel="author">关于作者</a>           <!-- 作者页面 -->
+<a href="/license" rel="license">许可证</a>           <!-- 许可证页面 -->
+<a href="/next-article" rel="next">下一页</a>         <!-- 分页：下一页 -->
+<a href="/prev-article" rel="prev">上一页</a>         <!-- 分页：上一页 -->
+<a href="/print" rel="alternate" media="print">打印版</a>
+<a href="https://other-site.com" rel="external">外部链接</a>
+
+<!-- 外部链接安全 -->
+<a href="https://external.com" target="_blank" rel="noopener noreferrer nofollow">
+    外部链接
+</a>
+
+<!-- nofollow：不传递权重 -->
+<a href="/privacy" rel="nofollow">隐私政策</a>        <!-- 不重要的页面 -->
+<a href="https://ads.com" rel="nofollow sponsored">广告链接</a>
+
+<!-- sponsored：赞助链接 -->
+<a href="https://sponsor.com" rel="sponsored">赞助内容</a>
+
+<!-- ugc：用户生成内容 -->
+<a href="/user-post/123" rel="ugc">用户评论中的链接</a>
 ```
 
 ### 5.2 Sitemap 与 robots.txt
@@ -493,6 +949,7 @@
         <image:image>
             <image:loc>https://example.com/images/article.jpg</image:loc>
             <image:title>前端开发指南</image:title>
+            <image:caption>封面图描述</image:caption>
         </image:image>
     </url>
 </urlset>
@@ -504,9 +961,22 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /private/
+Disallow: /tmp/
 Disallow: /*.json$
+Disallow: /*?sort=
 
+# 特定爬虫规则
+User-agent: Googlebot
+Allow: /
+Disallow: /private/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /private/
+
+# 站点地图位置
 Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-news.xml
 ```
 
 ---
@@ -523,73 +993,128 @@ Sitemap: https://example.com/sitemap.xml
 
 <!-- 预连接到外部域名 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://analytics.google.com">
 
 <!-- 预获取未来可能需要的资源 -->
 <link rel="prefetch" href="next-page.html">
+<link rel="prefetch" href="future-resource.js" as="script">
 
 <!-- 预渲染下一页（谨慎使用） -->
 <link rel="prerender" href="next-page.html">
-
-<!-- 异步加载 CSS -->
-<link rel="preload" href="non-critical.css" as="style" onload="this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="non-critical.css"></noscript>
-
-<!-- 脚本加载策略 -->
-<script src="critical.js"></script>                    <!-- 阻塞加载 -->
-<script src="analytics.js" async></script>              <!-- 异步加载 -->
-<script src="non-critical.js" defer></script>           <!-- 延迟执行 -->
-<script type="module" src="app.js"></script>            <!-- ES 模块 -->
 ```
 
-### 6.2 图片性能优化
+#### 脚本加载策略
 
 ```html
-<!-- 使用现代图片格式 -->
-<picture>
-    <source srcset="image.avif" type="image/avif">
-    <source srcset="image.webp" type="image/webp">
-    <img src="image.jpg" alt="Fallback image">
-</picture>
+<!-- 阻塞加载（仅关键脚本） -->
+<script src="critical.js"></script>
 
-<!-- 懒加载 -->
-<img loading="lazy" src="image.jpg" alt="懒加载图片">
-<iframe loading="lazy" src="embed.html"></iframe>
+<!-- 异步加载（不阻塞，顺序不保证） -->
+<script src="analytics.js" async></script>
 
-<!-- 响应式图片尺寸 -->
-<img 
-    srcset="small.jpg 400w, medium.jpg 800w, large.jpg 1200w"
-    sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    src="medium.jpg"
-    alt="响应式图片">
+<!-- 延迟执行（不阻塞，按顺序执行） -->
+<script src="non-critical.js" defer></script>
+
+<!-- ES 模块 -->
+<script type="module" src="app.js"></script>
+<script nomodule src="app-legacy.js"></script>
+
+<!-- 内联关键 CSS -->
+<style>
+    /* 首屏关键样式 */
+    body { margin: 0; font-family: sans-serif; }
+    .header { background: #fff; }
+</style>
+
+<!-- 异步加载非关键 CSS -->
+<link rel="preload" href="non-critical.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="non-critical.css"></noscript>
 ```
 
-### 6.3 核心 Web 指标优化
+### 6.2 核心 Web 指标优化
 
 ```html
 <!-- LCP (Largest Contentful Paint) 优化 -->
-<!-- 首屏大图预加载 -->
+<!-- 目标：< 2.5s -->
+
+<!-- 预加载首屏大图 -->
 <link rel="preload" as="image" href="hero.webp">
 
+<!-- 内联关键 CSS -->
+<style>/* 关键样式 */</style>
+
+<!-- 异步加载字体 -->
+<link rel="preload" href="font.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+    @font-face {
+        font-family: 'CustomFont';
+        src: url('font.woff2') format('woff2');
+        font-display: swap;  /* 避免字体加载延迟 */
+    }
+</style>
+```
+
+```html
 <!-- CLS (Cumulative Layout Shift) 优化 -->
+<!-- 目标：< 0.1 -->
+
 <!-- 为图片预留空间 -->
 <img 
     src="image.jpg" 
     alt="描述"
     width="800" 
     height="450"
-    style="aspect-ratio: 800/450;">
+>
 
-<!-- 或使用 CSS aspect-ratio -->
+<!-- 使用 aspect-ratio -->
 <style>
     .image-container {
         aspect-ratio: 16/9;
         background: #f0f0f0;
     }
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 </style>
 
+<!-- 字体加载占位 -->
+<style>
+    .text {
+        font-family: 'CustomFont', system-ui, sans-serif;
+    }
+    /* 或使用 font-display: optional 避免布局偏移 */
+</style>
+
+<!-- 动画使用 transform -->
+<style>
+    /* ✅ 使用 transform（不影响布局） */
+    .animate {
+        transform: translateX(0);
+        transition: transform 0.3s;
+    }
+    .animate:hover {
+        transform: translateX(10px);
+    }
+    
+    /* ❌ 避免改变布局属性 */
+    .bad-animate {
+        left: 0;
+        transition: left 0.3s;
+    }
+    .bad-animate:hover {
+        left: 10px;  /* 触发重排 */
+    }
+</style>
+```
+
+```html
 <!-- FID (First Input Delay) / INP 优化 -->
-<!-- 减少 JavaScript 阻塞 -->
+<!-- 目标：< 100ms (FID), < 200ms (INP) -->
+
+<!-- 减少主线程阻塞 -->
 <script defer src="non-critical.js"></script>
 
 <!-- 分解长任务 -->
@@ -598,6 +1123,29 @@ Sitemap: https://example.com/sitemap.xml
     requestIdleCallback(() => {
         // 非关键代码
     });
+    
+    // 分批处理大数据
+    function processInBatches(items, batchSize = 100) {
+        let i = 0;
+        function processBatch() {
+            const batch = items.slice(i, i + batchSize);
+            batch.forEach(item => processItem(item));
+            i += batchSize;
+            if (i < items.length) {
+                requestIdleCallback(processBatch);
+            }
+        }
+        requestIdleCallback(processBatch);
+    }
+</script>
+
+<!-- Web Worker 处理复杂计算 -->
+<script>
+    const worker = new Worker('compute.js');
+    worker.postMessage({ data: largeDataSet });
+    worker.onmessage = (e) => {
+        // 处理结果
+    };
 </script>
 ```
 
@@ -626,7 +1174,41 @@ Sitemap: https://example.com/sitemap.xml
 <meta http-equiv="Content-Security-Policy-Report-Only" content="
     default-src 'self';
     report-uri /csp-report;
+    report-to csp-endpoint;
 ">
+
+<!-- 报告端点 -->
+<meta http-equiv="Reporting-Endpoints" content='csp-endpoint="https://example.com/csp-reports"'>
+```
+
+#### CSP 指令详解
+
+```html
+<!-- 常用指令 -->
+<!--
+default-src: 默认资源策略
+script-src: JavaScript 资源
+style-src: CSS 资源
+img-src: 图片资源
+font-src: 字体资源
+connect-src: AJAX、WebSocket 连接
+frame-src: iframe 嵌入
+object-src: 插件资源（建议设为 'none'）
+media-src: 音视频资源
+manifest-src: Web App Manifest
+worker-src: Web Worker
+child-src: 子框架和 Worker
+
+特殊值：
+'self': 同源
+'none': 禁止
+'unsafe-inline': 允许内联（降低安全性）
+'unsafe-eval': 允许 eval（降低安全性）
+'nonce-xxx': 使用 nonce
+'sha256-xxx': 使用哈希
+data:: 允许 data URI
+https:: 允许 HTTPS 资源
+-->
 ```
 
 ### 7.2 安全链接
@@ -637,27 +1219,53 @@ Sitemap: https://example.com/sitemap.xml
     外部链接
 </a>
 
+<!-- rel 属性说明 -->
+<!-- 
+noopener: 防止新页面访问 window.opener
+noreferrer: 不发送 Referer 头
+nofollow: 不传递 SEO 权重
+sponsored: 赞助链接
+ugc: 用户生成内容
+-->
+
 <!-- 安全的 iframe -->
 <iframe 
     src="https://example.com/embed"
-    sandbox="allow-scripts allow-same-origin allow-forms"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
     loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
+    referrerpolicy="no-referrer-when-downgrade"
+>
 </iframe>
 
-<!-- X-Frame-Options 等效（防点击劫持） -->
-<!-- 在服务器设置：X-Frame-Options: DENY -->
-<!-- 或使用 CSP：frame-ancestors 'none' -->
+<!-- sandbox 属性说明 -->
+<!--
+allow-scripts: 允许脚本
+allow-same-origin: 允许同源
+allow-forms: 允许表单
+allow-popups: 允许弹窗
+allow-popups-to-escape-sandbox: 允许弹窗脱离沙箱
+allow-top-navigation: 允许导航顶级窗口
+allow-downloads: 允许下载
+-->
 ```
 
 ### 7.3 其他安全头部
 
 ```html
-<!-- X-Content-Type-Options（防止 MIME 嗅探） -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-
 <!-- Referrer Policy -->
 <meta name="referrer" content="strict-origin-when-cross-origin">
+
+<!-- 可选值 -->
+<!--
+no-referrer: 不发送 Referer
+no-referrer-when-downgrade: 降级时不发送
+origin: 只发送源
+origin-when-cross-origin: 跨域时只发送源
+same-origin: 同源时发送完整 URL
+strict-origin: 只发送源，降级时不发送
+strict-origin-when-cross-origin: 默认值
+unsafe-url: 始终发送完整 URL
+-->
 
 <!-- Permissions Policy（功能权限） -->
 <meta http-equiv="Permissions-Policy" content="
@@ -665,15 +1273,84 @@ Sitemap: https://example.com/sitemap.xml
     camera=(),
     microphone=(),
     payment=(),
-    usb=()
+    usb=(),
+    magnetometer=(),
+    gyroscope=(),
+    accelerometer=()
 ">
+
+<!-- X-Content-Type-Options（服务器设置） -->
+<!-- X-Content-Type-Options: nosniff -->
+
+<!-- Strict-Transport-Security（服务器设置） -->
+<!-- Strict-Transport-Security: max-age=31536000; includeSubDomains; preload -->
 ```
 
 ---
 
-## 8. 移动端 SEO
+## 8. 国际化 SEO
 
-### 8.1 移动端优化
+### 8.1 多语言页面标记
+
+```html
+<!-- 语言标记 -->
+<html lang="zh-CN">
+
+<!-- 页面内语言切换 -->
+<p lang="en">This is English text.</p>
+
+<!-- 交替语言版本 -->
+<link rel="alternate" hreflang="zh-CN" href="https://example.com/zh/article">
+<link rel="alternate" hreflang="en" href="https://example.com/en/article">
+<link rel="alternate" hreflang="ja" href="https://example.com/ja/article">
+<link rel="alternate" hreflang="x-default" href="https://example.com/article">
+
+<!-- hreflang 代码 -->
+<!--
+zh-CN: 简体中文（中国大陆）
+zh-TW: 繁体中文（台湾）
+zh-HK: 繁体中文（香港）
+en: 英语
+en-US: 美式英语
+en-GB: 英式英语
+ja: 日语
+ko: 韩语
+x-default: 默认语言版本
+-->
+```
+
+### 8.2 多区域网站结构
+
+```html
+<!-- 方案一：子目录 -->
+<!-- https://example.com/zh/ -->
+<!-- https://example.com/en/ -->
+<!-- https://example.com/ja/ -->
+
+<!-- 方案二：子域名 -->
+<!-- https://cn.example.com/ -->
+<!-- https://en.example.com/ -->
+<!-- https://jp.example.com/ -->
+
+<!-- 方案三：独立域名 -->
+<!-- https://example.cn/ -->
+<!-- https://example.com/ -->
+<!-- https://example.jp/ -->
+
+<!-- 每个页面的头部都需要标记 -->
+<head>
+    <link rel="canonical" href="https://example.com/zh/article">
+    <link rel="alternate" hreflang="zh-CN" href="https://example.com/zh/article">
+    <link rel="alternate" hreflang="en" href="https://example.com/en/article">
+    <link rel="alternate" hreflang="x-default" href="https://example.com/article">
+</head>
+```
+
+---
+
+## 9. 移动端 SEO
+
+### 9.1 移动端优化
 
 ```html
 <!-- 移动端必需设置 -->
@@ -683,69 +1360,102 @@ Sitemap: https://example.com/sitemap.xml
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="应用名称">
+
+<!-- 主题色 -->
+<meta name="theme-color" content="#4285f4">
+<meta name="msapplication-navbutton-color" content="#4285f4">
+<meta name="msapplication-TileColor" content="#4285f4">
+
+<!-- iOS 图标 -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
 
 <!-- PWA 相关 -->
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#4285f4">
+```
 
-<!-- manifest.json -->
+#### PWA Manifest
+
+```json
 {
-    "name": "我的应用",
+    "name": "我的应用完整名称",
     "short_name": "应用",
-    "start_url": "/",
+    "description": "应用描述",
+    "start_url": "/?source=pwa",
     "display": "standalone",
+    "orientation": "portrait-primary",
     "background_color": "#ffffff",
     "theme_color": "#4285f4",
+    "scope": "/",
+    "lang": "zh-CN",
+    "categories": ["education", "productivity"],
     "icons": [
+        {
+            "src": "/icon-72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"
+        },
         {
             "src": "/icon-192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
             "src": "/icon-512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshot1.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/screenshot2.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
     ]
 }
 ```
 
-### 8.2 AMP 页面（可选）
+### 9.2 移动端性能优化
 
 ```html
-<!-- AMP HTML -->
-<!DOCTYPE html>
-<html amp lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="canonical" href="https://example.com/article.html">
-    <style amp-boilerplate>
-        body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
-        -moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
-        -ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
-        animation:-amp-start 8s steps(1,end) 0s 1 normal both}
-        @-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-        @-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-        @-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-        @-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-        @keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-    </style>
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
-</head>
-<body>
-    <h1>AMP 页面标题</h1>
-    <amp-img src="image.jpg" width="800" height="450" layout="responsive" alt="描述"></amp-img>
-</body>
-</html>
+<!-- 移动端特定优化 -->
+
+<!-- 减少重定向 -->
+<!-- ❌ 避免：example.com → m.example.com → m.example.com/page -->
+
+<!-- 使用 App Links -->
+<meta property="al:ios:url" content="myapp://article/123">
+<meta property="al:ios:app_store_id" content="123456789">
+<meta property="al:ios:app_name" content="My App">
+<meta property="al:android:url" content="myapp://article/123">
+<meta property="al:android:package" content="com.example.app">
+<meta property="al:android:app_name" content="My App">
+
+<!-- 减少移动端资源 -->
+<picture>
+    <source media="(max-width: 600px)" srcset="small.webp">
+    <source media="(max-width: 1200px)" srcset="medium.webp">
+    <img src="large.jpg" alt="响应式图片">
+</picture>
 ```
 
 ---
 
-## 9. SEO 审计清单
+## 10. SEO 审计清单
 
-### 9.1 技术检查清单
+### 10.1 技术检查清单
 
 | 检查项 | 状态 | 说明 |
 |--------|------|------|
@@ -760,7 +1470,7 @@ Sitemap: https://example.com/sitemap.xml
 | 重定向正确 | ☐ | 301 永久重定向 |
 | 无爬虫陷阱 | ☐ | 避免无限循环 |
 
-### 9.2 内容检查清单
+### 10.2 内容检查清单
 
 | 检查项 | 状态 | 说明 |
 |--------|------|------|
@@ -774,41 +1484,22 @@ Sitemap: https://example.com/sitemap.xml
 | 内容原创 | ☐ | 无重复内容 |
 | 关键词布局 | ☐ | 自然分布 |
 
----
+### 10.3 性能检查清单
 
-## 10. SEO 工具推荐
-
-### 10.1 分析工具
-
-```markdown
-**官方工具**
-- Google Search Console - 索引状态、搜索分析
-- Google Analytics - 流量分析
-- Bing Webmaster Tools - 必应搜索数据
-
-**SEO 审计工具**
-- Screaming Frog SEO Spider - 网站爬虫分析
-- Ahrefs - 反向链接分析
-- SEMrush - 竞争对手分析
-- Moz Pro - SEO 综合工具
-
-**性能测试**
-- Google PageSpeed Insights - 页面速度评分
-- Lighthouse - 综合性能审计
-- WebPageTest - 详细性能分析
-
-**结构化数据**
-- Google Rich Results Test - 富媒体结果测试
-- Schema Markup Validator - 结构化数据验证
-
-**移动端测试**
-- Google Mobile-Friendly Test - 移动端友好测试
-- Chrome DevTools Device Mode - 移动端模拟
-```
+| 检查项 | 目标值 |
+|--------|--------|
+| LCP (最大内容绘制) | < 2.5s |
+| FID (首次输入延迟) | < 100ms |
+| CLS (累积布局偏移) | < 0.1 |
+| TTFB (首字节时间) | < 600ms |
+| FCP (首次内容绘制) | < 1.8s |
+| TTI (可交互时间) | < 3.8s |
 
 ---
 
 ## 小结
+
+### SEO 要素速查
 
 | SEO 要素 | 最佳实践 |
 |----------|----------|
@@ -820,6 +1511,8 @@ Sitemap: https://example.com/sitemap.xml
 | 安全 | HTTPS，CSP，安全链接 |
 | 结构化数据 | 使用 Schema.org |
 
+### 常见错误与解决方案
+
 | 常见错误 | 解决方案 |
 |----------|----------|
 | 重复内容 | 使用 canonical |
@@ -827,21 +1520,36 @@ Sitemap: https://example.com/sitemap.xml
 | 慢速页面 | 优化资源加载 |
 | 缺少 alt | 为所有图片添加描述 |
 | 多个 h1 | 每页只用一个 h1 |
+| 跳过标题层级 | 按顺序使用 h1-h6 |
+| 无意义锚文本 | 使用描述性链接文本 |
+
+### 核心 Web 指标优化要点
+
+| 指标 | 优化方法 |
+|------|----------|
+| LCP | 预加载关键资源、优化服务器响应、CDN |
+| CLS | 图片预留空间、字体优化、避免插入内容 |
+| INP | 减少 JavaScript 阻塞、分解长任务、使用 Web Worker |
 
 ---
 
 ## 参考资源
 
 ### 官方文档
+
 - [Google SEO 指南](https://developers.google.com/search/docs)
 - [MDN SEO 基础](https://developer.mozilla.org/zh-CN/docs/Glossary/SEO)
 - [Schema.org](https://schema.org/)
+- [Web.dev 性能优化](https://web.dev/performance/)
 
 ### 工具
+
 - [Google Search Console](https://search.google.com/search-console)
 - [PageSpeed Insights](https://pagespeed.web.dev/)
 - [Rich Results Test](https://search.google.com/test/rich-results)
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse)
+- [Screaming Frog SEO Spider](https://www.screamingfrog.co.uk/seo-spider/)
 
 ---
 
-[返回上级目录](../README.md)
+[返回上级目录](../index.md)
