@@ -8,11 +8,13 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const mdDir = path.resolve(__dirname, '../md')
 
-// 从文件夹名称提取标题（移除序号前缀）
-function extractTitle(folderName: string): string {
+// 从文件夹名称或文件名提取标题（移除序号前缀）
+function extractTitle(name: string): string {
+  // 移除 .md 后缀
+  let title = name.replace('.md', '')
   // 匹配 "01-xxx" 或 "01_xxx" 格式，提取 xxx 部分
-  const match = folderName.match(/^\d+[-_](.+)$/)
-  return match ? match[1] : folderName
+  const match = title.match(/^\d+[-_](.+)$/)
+  return match ? match[1] : title
 }
 
 // 获取目录下的所有子文件夹
@@ -33,37 +35,73 @@ function getMdFiles(dir: string): { text: string; link: string }[] {
     .filter(name => name.endsWith('.md') && name !== 'index.md')
     .sort()
     .map(name => ({
-      text: name.replace('.md', '').replace(/^\d+-/, ''),
+      text: extractTitle(name),
       link: name.replace('.md', '')
     }))
 }
 
-// 为某个技术栈生成侧边栏配置
-function generateSidebar(techDir: string): { text: string; collapsed: boolean; items: { text: string; link: string }[] }[] {
-  const subFolders = getSubFolders(techDir)
+// 递归生成侧边栏配置项
+interface SidebarItem {
+  text: string
+  link?: string
+  collapsed?: boolean
+  items?: SidebarItem[]
+}
+
+function generateSidebarRecursive(
+  dir: string, 
+  basePath: string,
+  depth: number = 0
+): SidebarItem[] {
+  const items: SidebarItem[] = []
   
-  return subFolders.map(folder => {
-    const folderPath = path.join(techDir, folder)
+  // 获取当前目录下的子文件夹
+  const subFolders = getSubFolders(dir)
+  
+  // 获取当前目录下的 md 文件
+  const mdFiles = getMdFiles(dir)
+  
+  // 先添加 index.md（如果存在）
+  const indexPath = path.join(dir, 'index.md')
+  if (fs.existsSync(indexPath)) {
+    items.push({
+      text: '概述',
+      link: basePath + '/'
+    })
+  }
+  
+  // 添加当前目录下的其他 md 文件
+  mdFiles.forEach(file => {
+    items.push({
+      text: file.text,
+      link: basePath + '/' + file.link
+    })
+  })
+  
+  // 递归处理子文件夹
+  subFolders.forEach(folder => {
+    const folderPath = path.join(dir, folder)
     const title = extractTitle(folder)
-    const mdFiles = getMdFiles(folderPath)
+    const newBasePath = basePath + '/' + folder
     
-    // 构建链接路径（相对于 md 目录）
-    const techName = path.basename(techDir)
+    // 检查子文件夹是否有内容
+    const subItems = generateSidebarRecursive(folderPath, newBasePath, depth + 1)
     
-    const items = [
-      { text: '概述', link: `/md/${techName}/${folder}/` },
-      ...mdFiles.map(file => ({
-        text: file.text,
-        link: `/md/${techName}/${folder}/${file.link}`
-      }))
-    ]
-    
-    return {
-      text: title,
-      collapsed: true,
-      items
+    if (subItems.length > 0) {
+      items.push({
+        text: title,
+        collapsed: depth < 2, // 前两层默认折叠
+        items: subItems
+      })
     }
   })
+  
+  return items
+}
+
+// 为某个技术栈生成侧边栏配置
+function generateSidebar(techDir: string, techName: string): SidebarItem[] {
+  return generateSidebarRecursive(techDir, `/md/${techName}`)
 }
 
 // 生成导航栏下拉项（从子文件夹读取）
@@ -102,14 +140,8 @@ function generateConfig() {
       ]
     })
     
-    // 生成侧边栏
-    sidebar[`/md/${tech}/`] = [
-      {
-        text: `${tech}`,
-        items: [{ text: '概述', link: `/md/${tech}/` }]
-      },
-      ...generateSidebar(techDir)
-    ]
+    // 生成侧边栏（递归生成所有层级）
+    sidebar[`/md/${tech}/`] = generateSidebar(techDir, tech)
   })
   
   return { nav, sidebar }
