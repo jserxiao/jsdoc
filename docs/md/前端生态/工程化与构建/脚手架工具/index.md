@@ -1,29 +1,46 @@
 # 脚手架工具
 
-## 概述
+> 前端脚手架工具帮助开发者快速初始化项目、生成代码模板、统一项目结构，是提升开发效率的重要工具。
 
-脚手架工具（CLI Tools）用于快速初始化项目、生成代码模板、统一项目结构，是提升开发效率的重要工具。好的脚手架可以帮助团队保持代码风格一致，减少重复工作。
+## 模块导航
 
-## 主流工具对比
-
-| 工具 | 定位 | 核心优势 | 适用场景 |
-|------|------|----------|----------|
-| **create-vite** | Vite 项目脚手架 | 多框架支持、模板丰富 | 新项目首选 |
-| **create-react-app** | React 官方脚手架 | 零配置、开箱即用 | React 学习 |
-| **Vue CLI** | Vue 项目脚手架 | 图形界面、插件体系 | Vue 2 项目 |
-| **Nx** | 企业级项目生成器 | Monorepo、代码生成 | 大型项目 |
-| **Turborepo** | Monorepo 构建系统 | 增量构建、远程缓存 | Monorepo |
-
-## 详细文档
-
-| 文档 | 说明 |
+| 模块 | 说明 |
 |------|------|
-| [create-vite](./create-vite.md) | Vite 官方脚手架，多框架支持 |
-| [create-react-app](./create-react-app.md) | React 官方脚手架 |
-| [Vue CLI](./Vue-CLI.md) | Vue 项目脚手架 |
-| [Nx](./Nx.md) | 企业级 Monorepo 项目生成器 |
-| [Turborepo](./Turborepo.md) | 高性能 Monorepo 构建系统 |
-| [自定义脚手架](./自定义脚手架.md) | plop / hygen 代码生成 |
+| [常用CLI对比](./常用CLI对比/index.md) | 主流脚手架工具对比：create-vite、create-react-app、Vue CLI、Angular CLI 等 |
+| [开发CLI](./开发CLI/index.md) | CLI 开发流程、所需工具库（commander、inquirer、chalk 等）、完整实现 |
+
+---
+
+## 快速概览
+
+```
+┌───────────────────────────────────────────────────────────────────────────────────────┐
+│  脚手架工具分类                                                                        │
+├───────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                       │
+│  项目初始化脚手架                                                                      │
+│  ├── create-vite      - Vite 官方脚手架，多框架支持，极速启动                        │
+│  ├── create-react-app - React 官方脚手架，零配置开箱即用                             │
+│  ├── Vue CLI          - Vue 生态脚手架，插件体系完善                                 │
+│  ├── Angular CLI      - Angular 官方脚手架，功能完备                                │
+│  ├── create-next-app  - Next.js 官方脚手架，SSR/SSG 支持                            │
+│  └── create-nuxt-app  - Nuxt.js 官方脚手架                                          │
+│                                                                                       │
+│  Monorepo 管理工具                                                                     │
+│  ├── Nx               - 企业级 Monorepo，功能全面                                   │
+│  ├── Turborepo        - 高性能构建系统，增量构建                                    │
+│  ├── pnpm workspaces  - 轻量级 Monorepo 方案                                        │
+│  └── Lerna            - 经典 Monorepo 工具                                          │
+│                                                                                       │
+│  代码生成工具                                                                          │
+│  ├── plop             - 交互式代码生成器                                            │
+│  ├── hygen            - 快速代码生成器                                              │
+│  └── yeoman           - 通用脚手架生成器                                            │
+│                                                                                       │
+└───────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
 
 ## 技术选型建议
 
@@ -32,6 +49,10 @@
 | 新项目 | create-vite | 速度快、模板丰富 |
 | Vue 3 项目 | create-vite | 官方推荐 |
 | React 学习 | create-react-app | 零配置、易上手 |
-| Vue 2 企业项目 | Vue CLI | 插件完善、图形界面 |
+| 需要 SSR | create-next / create-nuxt | 内置 SSR 支持 |
 | Monorepo | Nx / Turborepo | 专业 Monorepo 工具 |
-| 代码生成 | plop / hygen | 自定义模板灵活 |
+| 自定义脚手架 | commander + inquirer | 灵活可控 |
+
+---
+
+[返回上级目录](../index.md)
